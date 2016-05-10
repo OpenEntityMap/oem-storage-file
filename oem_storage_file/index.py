@@ -47,14 +47,27 @@ class IndexFileStorage(IndexStorage, BaseFileStorage, Plugin):
         return value
 
     def load(self, collection):
-        return self.main.format.from_path(
+        if not os.path.exists(self.path):
+            return ModelRegistry['Index'](collection, self)
+
+        return self.format.from_path(
             collection, ModelRegistry['Index'], self.path,
             children=False,
             storage=self
         )
 
+    #
+    # Metadata
+    #
+
+    def create(self, collection, key):
+        return ModelRegistry['Metadata'](
+            collection, key,
+            storage=MetadataFileStorage.open(self.parent, key)
+        )
+
     def parse(self, collection, key, value):
-        return self.main.format.from_dict(
+        return self.format.from_dict(
             collection, ModelRegistry['Metadata'], value,
             key=str(key),
             storage=MetadataFileStorage.open(self.parent, key)

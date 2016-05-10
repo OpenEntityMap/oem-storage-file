@@ -11,6 +11,8 @@ class CollectionFileStorage(CollectionStorage, BaseFileStorage, Plugin):
     __key__ = 'file/collection'
 
     def __init__(self, parent, source, target, version=None):
+        super(CollectionFileStorage, self).__init__()
+
         self.parent = parent
         self.source = source
         self.target = target
@@ -35,3 +37,8 @@ class CollectionFileStorage(CollectionStorage, BaseFileStorage, Plugin):
 
     def open_index(self, collection):
         return ModelRegistry['Index'].load(collection, IndexFileStorage.open(self))
+
+    def __repr__(self):
+        return 'CollectionFileStorage path: %r, format: %r>' % (
+            self.path, self.format
+        )

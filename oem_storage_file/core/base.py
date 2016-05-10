@@ -7,11 +7,7 @@ log = logging.getLogger(__name__)
 
 
 class BaseFileStorage(Plugin):
-    def database_path(self, source, target, version=None):
-        if version is None:
-            # TODO pick the latest release version
-            version = '1.0.0'
-
+    def database_path(self, source, target):
         # Retrieve package path
         package_path = self.package_path(source, target)
 
@@ -27,7 +23,7 @@ class BaseFileStorage(Plugin):
             return None
 
         # Build collection path
-        return os.path.join(package_path, version, database_name)
+        return os.path.join(package_path, database_name)
 
     def package_path(self, source, target):
         name = self._client.package_name(source, target)

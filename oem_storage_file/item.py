@@ -29,7 +29,7 @@ class ItemFileStorage(ItemStorage, BaseFileStorage, Plugin):
         self.path = os.path.join(self.parent.path, 'items', '%s.%s' % (self.key, self.format.__extension__))
 
     def load(self, collection, media):
-        return self.main.format.from_path(
+        return self.format.from_path(
             collection, ModelRegistry['Item'], self.path,
             media=media,
             storage=self

@@ -12,6 +12,8 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
     __key__ = 'file'
 
     def __init__(self, path=None):
+        super(ProviderFileStorage, self).__init__()
+
         self.path = path
 
         if self.path is None:
@@ -36,9 +38,9 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
 
         return True
 
-    def open_database(self, source, target, version=None, path=None):
+    def open_database(self, source, target, path=None):
         return ModelRegistry['Database'].load(
-            DatabaseFileStorage.open(self, source, target, version, path),
+            DatabaseFileStorage.open(self, source, target, path),
             source, target
         )
 
@@ -46,15 +48,15 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
     # Index methods
     #
 
-    def has_index(self, source, target, version):
+    def has_index(self, source, target):
         return os.path.exists(os.path.join(
-            self._collection_path(source, target, version),
+            self._collection_path(source, target),
             'index.%s' % self.main.format.__extension__
         ))
 
-    def update_index(self, source, target, version, response):
+    def update_index(self, source, target, response):
         # Build collection path
-        collection_path = self._collection_path(source, target, version)
+        collection_path = self._collection_path(source, target)
 
         # Ensure directory exists
         if not os.path.exists(collection_path):
@@ -74,15 +76,15 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
     # Item methods
     #
 
-    def has_item(self, source, target, version, key):
+    def has_item(self, source, target, key):
         return os.path.exists(os.path.join(
-            self._collection_path(source, target, version), 'items',
+            self._collection_path(source, target), 'items',
             '%s.%s' % (key, self.main.format.__extension__)
         ))
 
-    def update_item(self, source, target, version, key, response):
+    def update_item(self, source, target, key, response, metadata):
         # Build collection path
-        items_path = os.path.join(self._collection_path(source, target, version), 'items')
+        items_path = os.path.join(self._collection_path(source, target), 'items')
 
         # Ensure directory exists
         if not os.path.exists(items_path):
@@ -102,8 +104,8 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
     # Private methods
     #
 
-    def _collection_path(self, source, target, version=None):
-        return os.path.join(self.database_path(source, target, version), source)
+    def _collection_path(self, source, target):
+        return os.path.join(self.database_path(source, target), source)
 
     @staticmethod
     def _create_dir():

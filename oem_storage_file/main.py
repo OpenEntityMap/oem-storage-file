@@ -76,7 +76,7 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
     # Item methods
     #
 
-    def has_item(self, source, target, key):
+    def has_item(self, source, target, key, metadata=None):
         return os.path.exists(os.path.join(
             self._collection_path(source, target), 'items',
             '%s.%s' % (key, self.main.format.__extension__)

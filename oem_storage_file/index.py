@@ -5,6 +5,7 @@ from oem_storage_file.core.base import BaseFileStorage
 from oem_storage_file.metadata import MetadataFileStorage
 
 import os
+import six
 import sys
 
 
@@ -38,7 +39,7 @@ class IndexFileStorage(IndexStorage, BaseFileStorage, Plugin):
             try:
                 value = index.items[key]
             except KeyError:
-                raise exc_info[0], exc_info[1], exc_info[2]
+                six.reraise(exc_info[0], exc_info[1], exc_info[2])
 
         # Ensure item has been parsed
         if type(value) is dict:

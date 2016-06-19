@@ -65,7 +65,7 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
         # Write index to file
         path = os.path.join(collection_path, 'index.%s' % self.main.format.__extension__)
 
-        with open(path, 'wb') as fp:
+        with open(path, 'w') as fp:
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     fp.write(chunk)
@@ -93,7 +93,7 @@ class ProviderFileStorage(ProviderStorage, BaseFileStorage, Plugin):
         # Write index to file
         path = os.path.join(items_path, '%s.%s' % (key, self.main.format.__extension__))
 
-        with open(path, 'wb') as fp:
+        with open(path, 'w') as fp:
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     fp.write(chunk)

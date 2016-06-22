@@ -1,0 +1,19 @@
+language: python
+python:
+- '2.7'
+install:
+- pip install -U setuptools
+script: true
+after_success: python setup.py sdist bdist_wheel
+deploy:
+  provider: releases
+  api_key:
+    secure: LVo657u6bT5bKHcvyFfkFEabEb1FwLAA+r6cnasJK9PVP9lZHZtZq1PV4Vx8L4s6mCB90vN9Ebc3IbNLotxq7v1QI1sjpC27nSMTTF86iAkxwjNqZy9f17ihPnfr1XyUFc7OoT+eEaYLMrdAZuxs6O3/WWbkpeRJZRbE9mQflXdlrBtF9sSj5FcW1teHtElIWMV0yT9M+EFBNs/jmKegvCSLecUg1oXtSUIypOQ3l45X0wRLiloetRvedcG9lySQYnlR9YcYxUSzZMNyhZ1zmTfw42Bz6BZVwopiwYK1EttSrFTczGgBUABIvtvVvVAZgJThf6/suqHj1PQPpQE/OnNZbEGEbQCLfwbn2qmCpZ1PXk03wyTRJOA7GUePgIzOxEc8g459TcXzmcU/jpwxHaCmJlTjid+ZNsRXCmVB4boSIo3hz0/dvKXANlTjFKzuGZbJ8ghp0Ox6FBuJw5jLo4IND6e3ugUPy7Sp+cyoKbpaN2Pwng7LvGuNfEpAl032Qd/D6eG1rtpoIVUe6QxKzUq4AgUMKu+Xc6a/wTl6R1UvlGnWd2RL3AE97jd0r8yQyBT5W5o/PZ60qIVi4d0gR/71Q/+wSwDguJUEc3a/+u5aQna7JvNYdsJy3VnuhUbicT9VOt2MzU4nBp3SGxSMMgSZFIkVz8S1yIMQQjuZubM=
+  skip_cleanup: true
+  file_glob: true
+  file:
+  - "dist/oem-storage-file-*"
+  - "dist/oem_storage_file-*"
+  on:
+    repo: OpenEntityMap/oem-storage-file
+    tags: true

@@ -29,6 +29,9 @@ class DatabaseFileStorage(DatabaseStorage, BaseFileStorage, Plugin):
         storage.initialize(parent._client)
         return storage
 
+    def __repr__(self):
+        return '<DatabaseFileStorage path: %r>' % self.path
+
     #
     # Database methods
     #

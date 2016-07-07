@@ -27,7 +27,7 @@ class MetadataFileStorage(MetadataStorage, BaseFileStorage, Plugin):
     def initialize(self, client):
         super(MetadataFileStorage, self).initialize(client)
 
-        self.path = os.path.join(self.parent.path, 'items', '%s.%s' % (self.key, self.format.__extension__))
+        self.path = os.path.join(self.parent.path, 'items', '%s.%s' % (self.key.replace(':', '_'), self.format.__extension__))
 
     def open_item(self, collection, media):
         storage = ItemFileStorage.open(self.parent, self.key)

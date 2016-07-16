@@ -33,7 +33,8 @@ class CollectionFileStorage(CollectionStorage, BaseFileStorage, Plugin):
     def initialize(self, client):
         super(CollectionFileStorage, self).initialize(client)
 
-        self.path = os.path.join(self.parent.path, self.source)
+        # Build collection path
+        self.path = os.path.join(self.parent.path, self.source.replace(':', '_'))
 
     def open_index(self, collection):
         return ModelRegistry['Index'].load(collection, IndexFileStorage.open(self))
